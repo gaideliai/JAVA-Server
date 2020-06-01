@@ -56,31 +56,27 @@ public class Server {
                                 
                                 if (f.exists()) {
                                     if (f.isDirectory()) {
-                                        File [] files;                                        
-                                        files = f.listFiles();
                                         bw.write("HTTP/1.1 200 OK");
                                         bw.newLine();
                                         bw.write("Content-Type: text/html; charset=UTF-8");
                                         bw.newLine();
                                         bw.newLine();
+                                        File [] files;                                        
+                                        files = f.listFiles();
+                                        bw.write("<html>");        
+                                        bw.write("<body>");
+                                        bw.write("<a href=\"..\">..</a>");
+                                        bw.write("<br>");
                                         for (File file : files) {
-                                            String [] elements;
-                                            elements = file.toString().split(fileName.substring(1, fileName.length()));
-                                            String name = elements[1];
-                                            name = name.substring(1, name.length());
-                                            System.out.println(name);
+                                            bw.write("<a href=\"" + file.getName() 
+                                                + ((file.isDirectory()) ? "/" : "")
+                                                + "\">" + file.getName() + "</a>");
+                                            bw.write("<br>");
                                             
-                                            bw.write("<html>");        
-                                            bw.write("<body>");                                            
-                                            bw.write("<a href=/dir/");
-                                            bw.write(name);
-                                            bw.write(">");
-                                            bw.write(name);
-                                            bw.write("</a>");
-                                            bw.write("</body>");
-                                            bw.write("</html>");
-                                            bw.newLine();
                                         }
+                                        bw.write("</body>");
+                                        bw.write("</html>");
+                                        bw.newLine();
                                     } else {
                                         bw.write("HTTP/1.1 200 OK");
                                         bw.newLine();
